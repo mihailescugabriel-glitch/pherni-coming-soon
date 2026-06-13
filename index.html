@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>PHERNI — Coming Soon</title>
+  <meta name="description" content="PHERNI — coming soon." />
+  <link rel="icon" type="image/png" href="assets/logo-black.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="PHERNI — Coming Soon" />
+  <meta property="og:description" content="PHERNI — coming soon." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/banner.jpg" />
+
+  <style>
+    :root{
+      --ink:#141414;
+      --muted:#6b6b6b;
+      --bg:#ffffff;
+      --bar:64px;
+      --pad:28px;
+      --label:11px;
+      --ls:.1em;
+      --font:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{-webkit-text-size-adjust:100%;}
+    body{
+      font-family:var(--font);
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{display:block;}
+
+    /* ---------- Header ---------- */
+    .header{
+      position:fixed;top:0;left:0;right:0;
+      height:var(--bar);
+      background:var(--bg);
+      z-index:100;
+      display:flex;align-items:center;
+      padding:0 var(--pad);
+    }
+    .nav-label{
+      font-size:var(--label);
+      letter-spacing:var(--ls);
+      text-transform:uppercase;
+      color:var(--ink);
+      white-space:nowrap;
+    }
+    .header__left{flex:1;display:flex;}
+    .header__right{
+      flex:1;display:flex;justify-content:flex-end;
+      gap:20px;
+    }
+    .header__logo{
+      position:absolute;left:50%;top:50%;
+      transform:translate(-50%,-50%);
+    }
+    .header__logo img{height:16px;width:auto;}
+
+    /* ---------- Hero ---------- */
+    .hero{
+      position:relative;
+      width:100%;
+      height:100vh;
+      height:100svh;
+      overflow:hidden;
+    }
+    .hero__img{
+      position:absolute;inset:0;
+      width:100%;height:100%;
+      object-fit:cover;
+      object-position:center 22%;
+    }
+    .hero__scrim{
+      position:absolute;left:0;right:0;bottom:0;
+      height:34%;
+      background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,.28) 100%);
+      pointer-events:none;
+    }
+    .hero__caption{
+      position:absolute;left:0;right:0;
+      bottom:6.5%;
+      text-align:center;
+      color:#fff;
+    }
+    .hero__caption .line{
+      font-size:13px;
+      letter-spacing:.12em;
+      font-weight:400;
+      text-transform:none;
+      text-shadow:0 1px 14px rgba(0,0,0,.35);
+    }
+
+    /* ---------- Footer ---------- */
+    .footer{
+      background:var(--bg);
+      color:var(--ink);
+      padding:64px var(--pad) 44px;
+      display:flex;
+      justify-content:space-between;
+      gap:48px;
+      flex-wrap:wrap;
+    }
+    .footer__news{max-width:360px;flex:1 1 300px;}
+    .footer__cols{
+      display:flex;
+      gap:96px;
+      flex:0 1 auto;
+    }
+    .col h4,.footer__news h4{
+      font-size:var(--label);
+      letter-spacing:var(--ls);
+      text-transform:uppercase;
+      font-weight:400;
+      margin-bottom:18px;
+      color:var(--ink);
+    }
+    .footer__news p{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:22px;
+      max-width:320px;
+    }
+    .news-form{
+      display:flex;align-items:center;
+      border-bottom:1px solid var(--ink);
+      max-width:320px;
+    }
+    .news-form input{
+      flex:1;border:0;outline:0;background:transparent;
+      font-family:var(--font);font-size:13px;color:var(--ink);
+      padding:8px 0;
+    }
+    .news-form input::placeholder{color:var(--muted);}
+    .news-form button{
+      border:0;background:transparent;cursor:pointer;
+      font-size:15px;color:var(--ink);padding:8px 2px 8px 10px;line-height:1;
+    }
+    .col ul{list-style:none;}
+    .col li{margin-bottom:11px;}
+    .col a{
+      font-size:13px;color:var(--muted);
+      transition:color .2s ease;
+    }
+    .col a:hover{color:var(--ink);}
+
+    /* ---------- Responsive ---------- */
+    @media (max-width:768px){
+      :root{--pad:18px;}
+      .footer{flex-direction:column;gap:40px;}
+      .footer__cols{gap:56px;flex-wrap:wrap;}
+      .header__logo img{height:15px;}
+    }
+    @media (max-width:420px){
+      .footer__cols{gap:40px;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__left">
+      <a href="#" class="nav-label">Shop</a>
+    </div>
+    <div class="header__logo">
+      <a href="#" aria-label="PHERNI home">
+        <img src="assets/logo-black.png" alt="PHERNI" />
+      </a>
+    </div>
+    <div class="header__right">
+      <a href="#" class="nav-label">Search</a>
+      <span class="nav-label">(0)</span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img
+      class="hero__img"
+      src="assets/banner.jpg"
+      srcset="assets/banner-mobile.jpg 1280w, assets/banner.jpg 2560w"
+      sizes="100vw"
+      alt="PHERNI" />
+    <div class="hero__scrim"></div>
+    <div class="hero__caption">
+      <div class="line">Coming Soon</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__news">
+      <h4>Newsletter</h4>
+      <p>Sign up to be the first to know.</p>
+      <form class="news-form" onsubmit="return false;">
+        <input type="email" placeholder="Email" aria-label="Email" />
+        <button type="submit" aria-label="Subscribe">&rarr;</button>
+      </form>
+    </div>
+    <div class="footer__cols">
+      <div class="col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
