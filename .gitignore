@@ -1,3 +1,7 @@
 # Source master — not deployed (kept locally for re-export)
 _src/
 .DS_Store
+
+# Internal project-basin docs — local only, never published
+CLAUDE.md
+Flow.md
