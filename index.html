@@ -62,8 +62,9 @@
     .header__logo{
       position:absolute;left:50%;top:50%;
       transform:translate(-50%,-50%);
+      transition:opacity .25s ease;
     }
-    .header__logo img{height:16px;width:auto;}
+    .header__logo img{height:18px;width:auto;}
 
     /* ---------- Hero ---------- */
     .hero{
@@ -77,7 +78,7 @@
       position:absolute;inset:0;
       width:100%;height:100%;
       object-fit:cover;
-      object-position:center 22%;
+      object-position:center 30%;
     }
     .hero__scrim{
       position:absolute;left:0;right:0;bottom:0;
@@ -92,8 +93,8 @@
       color:#fff;
     }
     .hero__caption .line{
-      font-size:13px;
-      letter-spacing:.12em;
+      font-size:16px;
+      letter-spacing:.14em;
       font-weight:400;
       text-transform:none;
       text-shadow:0 1px 14px rgba(0,0,0,.35);
@@ -151,13 +152,28 @@
       transition:color .2s ease;
     }
     .col a:hover{color:var(--ink);}
+    .news-msg{font-size:13px;color:var(--ink);max-width:320px;}
+
+    /* ---------- Coming-soon toast ---------- */
+    .nav-label[data-soon]{cursor:pointer;}
+    .toast{
+      position:fixed;top:15px;left:50%;
+      transform:translateX(-50%) translateY(-4px);
+      background:var(--ink);color:#fff;
+      font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+      padding:9px 18px;white-space:nowrap;
+      opacity:0;pointer-events:none;
+      transition:opacity .3s ease,transform .3s ease;
+      z-index:200;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
     /* ---------- Responsive ---------- */
     @media (max-width:768px){
       :root{--pad:18px;}
       .footer{flex-direction:column;gap:40px;}
       .footer__cols{gap:56px;flex-wrap:wrap;}
-      .header__logo img{height:15px;}
+      .header__logo img{height:17px;}
     }
     @media (max-width:420px){
       .footer__cols{gap:40px;}
@@ -169,7 +185,7 @@
   <!-- Header -->
   <header class="header">
     <div class="header__left">
-      <a href="#" class="nav-label">Shop</a>
+      <a href="#" class="nav-label" data-soon>Shop</a>
     </div>
     <div class="header__logo">
       <a href="#" aria-label="PHERNI home">
@@ -177,8 +193,8 @@
       </a>
     </div>
     <div class="header__right">
-      <a href="#" class="nav-label">Search</a>
-      <span class="nav-label">(0)</span>
+      <a href="#" class="nav-label" data-soon>Search</a>
+      <span class="nav-label" data-soon>(0)</span>
     </div>
   </header>
 
@@ -201,16 +217,18 @@
     <div class="footer__news">
       <h4>Newsletter</h4>
       <p>Sign up to be the first to know.</p>
-      <form class="news-form" onsubmit="return false;">
-        <input type="email" placeholder="Email" aria-label="Email" />
+      <form class="news-form" id="newsletter" action="https://formsubmit.co/ajax/malciuteaiste@gmail.com" method="POST">
+        <input type="email" name="email" placeholder="Email" aria-label="Email" required />
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
         <button type="submit" aria-label="Subscribe">&rarr;</button>
       </form>
+      <p class="news-msg" id="news-msg" hidden></p>
     </div>
     <div class="footer__cols">
       <div class="col">
         <h4>Connect</h4>
         <ul>
-          <li><a href="#">Instagram</a></li>
+          <li><a href="https://www.instagram.com/pherniofficial/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         </ul>
       </div>
       <div class="col">
@@ -222,6 +240,57 @@
       </div>
     </div>
   </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  (function () {
+    // --- "Coming Soon" toast on non-functional header buttons ---
+    var toast = document.getElementById('toast');
+    var logo = document.querySelector('.header__logo');
+    var toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      if (logo) logo.style.opacity = '0';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.remove('show');
+        if (logo) logo.style.opacity = '';
+      }, 1800);
+    }
+    document.querySelectorAll('[data-soon]').forEach(function (el) {
+      el.addEventListener('click', function (e) { e.preventDefault(); showToast('Coming Soon'); });
+    });
+
+    // --- Newsletter -> FormSubmit (AJAX, no page reload) ---
+    var form = document.getElementById('newsletter');
+    var msg = document.getElementById('news-msg');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var input = form.querySelector('input[name="email"]');
+        var email = (input.value || '').trim();
+        if (!email) { return; }
+        function thanks() {
+          form.style.display = 'none';
+          msg.hidden = false;
+          msg.textContent = "Thanks — we'll be in touch.";
+        }
+        fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            _subject: 'New PHERNI newsletter signup',
+            _template: 'table',
+            _captcha: false
+          })
+        }).then(thanks).catch(thanks);
+      });
+    }
+  })();
+  </script>
 
 </body>
 </html>
